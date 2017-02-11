@@ -1,14 +1,14 @@
-package org.camunda.bpm.config;
+package org.example.config;
 
-import org.camunda.bpm.service.DataService;
+import org.example.service.DataService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = "org.camunda.bpm")
-public class JavaConfig {
+@ComponentScan(basePackages = {"org.camunda.bpm", "org.example"})
+public class AppConfig {
 
 	@Bean
 	public DataService dataService() {

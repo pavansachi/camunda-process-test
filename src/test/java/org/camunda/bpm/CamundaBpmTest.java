@@ -3,11 +3,12 @@ package org.camunda.bpm;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.camunda.bpm.config.JavaConfig;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.service.DataService;
+import org.example.SpringBootMainApplication;
+import org.example.config.AppConfig;
+import org.example.service.DataService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,7 +21,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {SpringBootMainApplication.class, JavaConfig.class})
+@SpringApplicationConfiguration(classes = {SpringBootMainApplication.class, AppConfig.class})
 public class CamundaBpmTest {
 
 	@Autowired

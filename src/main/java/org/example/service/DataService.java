@@ -1,4 +1,4 @@
-package org.camunda.bpm.service;
+package org.example.service;
 
 public interface DataService {
 
