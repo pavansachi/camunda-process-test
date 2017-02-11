@@ -9,7 +9,7 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.listener.ErrorListener;
 import org.example.SpringBootMainApplication;
-import org.example.config.AppConfig;
+import org.example.config.TestConfig;
 import org.example.model.WeatherData;
 import org.example.service.WeatherDataService;
 import org.junit.Assert;
@@ -23,7 +23,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {SpringBootMainApplication.class, AppConfig.class})
+@SpringApplicationConfiguration(classes = {SpringBootMainApplication.class, TestConfig.class})
 public class CamundaBpmTest {
 
 	@Autowired

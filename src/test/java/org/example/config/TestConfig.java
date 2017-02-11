@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = {"org.camunda.bpm", "org.example"})
-public class AppConfig {
+public class TestConfig {
 
 	@Bean
 	public WeatherDataService weatherDataService() {
