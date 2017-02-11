@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0em9bu4</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Task_0jnkozg" name="Record Exists" camunda:delegateExpression="${recordExistsDelegate}">
+    <bpmn:serviceTask id="Task_0jnkozg" name="Get Weather" camunda:delegateExpression="${getWeatherDelegate}">
       <bpmn:incoming>SequenceFlow_0em9bu4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0g73b3r</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -19,14 +19,14 @@
       <bpmn:outgoing>SequenceFlow_1awicy3</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1hn0c7z" sourceRef="ExclusiveGateway_07qwb97" targetRef="EndEvent_1rzjwk2">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reachable == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${DATA_AVAILABLE == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:receiveTask id="Task_wait" name="Waiting Task">
       <bpmn:incoming>SequenceFlow_1awicy3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0pk7cid</bpmn:outgoing>
     </bpmn:receiveTask>
     <bpmn:sequenceFlow id="SequenceFlow_1awicy3" sourceRef="ExclusiveGateway_07qwb97" targetRef="Task_wait">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${reachable == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${DATA_AVAILABLE == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="EndEvent_19seohn">
       <bpmn:incoming>SequenceFlow_0pk7cid</bpmn:incoming>

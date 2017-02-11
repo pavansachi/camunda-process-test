@@ -1,17 +1,18 @@
 package org.camunda.bpm;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.example.SpringBootMainApplication;
 import org.example.config.AppConfig;
-import org.example.service.DataService;
+import org.example.model.WeatherData;
+import org.example.service.WeatherDataService;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -28,7 +29,7 @@ public class CamundaBpmTest {
 	private RuntimeService runtimeService;
 
 	@Autowired
-	private DataService dataService;
+	private WeatherDataService weatherDataService;
 
 	private ProcessInstance processInstance;
 
@@ -40,33 +41,20 @@ public class CamundaBpmTest {
 	}
 
 	@Test
-	public void testDataServiceReachable() {
+	public void testReturnWeatherData() throws Exception {
 
-		Mockito.when(dataService.isReachable()).thenReturn(true);
+		Mockito.when(weatherDataService.getWeather("Sydney")).thenReturn(
+				new WeatherData("Sydney", 30)
+				);
 
-		processInstance = runtimeService.startProcessInstanceByKey("mProcess");
-
-		Assert.assertNotNull(processInstance);
-
-		assertThat(runtimeService.createProcessInstanceQuery().count(), is(0L));
-	}
-
-//	@Test
-	@Ignore
-	public void testDataServiceNotReachable() {
-
-		Mockito.when(dataService.isReachable()).thenReturn(false);
+		Map<String, Object> variables = new HashMap<>();
+		variables.put("city", "Sydney");
 		
-		processInstance = runtimeService.startProcessInstanceByKey("mProcess");
-		
-		Assert.assertNotNull(processInstance);
+		processInstance = runtimeService.
+				startProcessInstanceByKey("mProcess", variables)
+				;
 
-		Execution execution = runtimeService.createExecutionQuery()
-				  .processInstanceId(processInstance.getId()).activityId("Task_wait").singleResult();
-		
-		runtimeService.signal(execution.getId());
-		
-		assertThat(runtimeService.createProcessInstanceQuery().count(), is(0L));
+		Assert.assertThat(runtimeService.createProcessInstanceQuery().count(), is(0L));
 	}
 
 }

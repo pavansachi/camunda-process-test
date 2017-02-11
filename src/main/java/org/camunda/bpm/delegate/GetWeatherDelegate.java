@@ -14,28 +14,39 @@ package org.camunda.bpm.delegate;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.example.service.DataService;
+import org.example.model.WeatherData;
+import org.example.service.WeatherDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RecordExistsDelegate implements JavaDelegate {
+public class GetWeatherDelegate implements JavaDelegate {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RecordExistsDelegate.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GetWeatherDelegate.class);
 
 	@Autowired
-	private DataService dataService;
+	private WeatherDataService weatherDataService;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 
-		LOGGER.debug("check if record exists");
-		
-		System.out.println("dataService.isReachable() " + dataService.isReachable());
-		
-		execution.setVariable("reachable", dataService.isReachable());
+		String city = (String) execution.getVariable("city");
+
+		try {
+			WeatherData weatherData = weatherDataService.getWeather(city);
+
+			String.format("Weather data -> %s : %s", city, weatherData.getTemperature());
+
+			execution.setVariable("DATA_AVAILABLE", true);
+		}
+		catch (Exception e) {
+
+			LOGGER.error("Weather Data not available");
+			execution.setVariable("DATA_AVAILABLE", false);
+		}
+
 	}
 
 }

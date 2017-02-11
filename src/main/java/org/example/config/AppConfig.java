@@ -1,6 +1,6 @@
 package org.example.config;
 
-import org.example.service.DataService;
+import org.example.service.WeatherDataService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
 	@Bean
-	public DataService dataService() {
+	public WeatherDataService weatherDataService() {
 		
-		return Mockito.mock(DataService.class);
+		return Mockito.mock(WeatherDataService.class);
 		
 	}
 	
