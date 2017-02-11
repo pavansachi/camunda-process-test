@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.example.SpringBootMainApplication;
 import org.example.config.AppConfig;
@@ -56,5 +57,27 @@ public class CamundaBpmTest {
 
 		Assert.assertThat(runtimeService.createProcessInstanceQuery().count(), is(0L));
 	}
+	
+	/*@Test
+	public void testThrowEx() throws Exception {
+
+		Mockito.when(weatherDataService.getWeather("Sydney")).thenThrow(
+				Exception.class);
+
+		Map<String, Object> variables = new HashMap<>();
+		variables.put("city", "Sydney");
+		
+		processInstance = runtimeService.
+				startProcessInstanceByKey("mProcess", variables)
+				;
+
+		Assert.assertThat(runtimeService.createProcessInstanceQuery().count(), is(1L));
+		
+		Execution execution = runtimeService.createExecutionQuery()
+				  .processInstanceId(processInstance.getId()).activityId("Task_wait").singleResult();
+		
+		runtimeService.signal(execution.getId());
+		
+	}*/
 
 }
