@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.listener.ErrorListener;
 import org.example.SpringBootMainApplication;
 import org.example.config.AppConfig;
 import org.example.model.WeatherData;
@@ -34,6 +34,9 @@ public class CamundaBpmTest {
 
 	private ProcessInstance processInstance;
 
+	@Autowired
+	private ErrorListener errorListener;
+	
 	@Before
 	public void setUp() throws Exception {
 
@@ -41,7 +44,7 @@ public class CamundaBpmTest {
 
 	}
 
-	@Test
+	@Test(expected=Exception.class)
 	public void testReturnWeatherData() throws Exception {
 
 		Mockito.when(weatherDataService.getWeather("Sydney")).thenReturn(
@@ -58,7 +61,7 @@ public class CamundaBpmTest {
 		Assert.assertThat(runtimeService.createProcessInstanceQuery().count(), is(0L));
 	}
 	
-	/*@Test
+	@Test
 	public void testThrowEx() throws Exception {
 
 		Mockito.when(weatherDataService.getWeather("Sydney")).thenThrow(
@@ -71,13 +74,10 @@ public class CamundaBpmTest {
 				startProcessInstanceByKey("mProcess", variables)
 				;
 
-		Assert.assertThat(runtimeService.createProcessInstanceQuery().count(), is(1L));
+		Mockito.verify(errorListener, Mockito.times(1)).execute(Mockito.any());
 		
-		Execution execution = runtimeService.createExecutionQuery()
-				  .processInstanceId(processInstance.getId()).activityId("Task_wait").singleResult();
+		Assert.assertThat(runtimeService.createProcessInstanceQuery().count(), is(0L));
 		
-		runtimeService.signal(execution.getId());
-		
-	}*/
+	}
 
 }

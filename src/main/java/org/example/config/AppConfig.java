@@ -1,5 +1,6 @@
 package org.example.config;
 
+import org.camunda.bpm.listener.ErrorListener;
 import org.example.service.WeatherDataService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,13 @@ public class AppConfig {
 	public WeatherDataService weatherDataService() {
 		
 		return Mockito.mock(WeatherDataService.class);
+		
+	}
+	
+	@Bean
+	public ErrorListener errorListener() {
+		
+		return Mockito.mock(ErrorListener.class);
 		
 	}
 	
